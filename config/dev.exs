@@ -65,7 +65,6 @@ config :eventstore, EventStore.Storage,
 
 config :bank_api, BankAPI.EventStore,
   serializer: Commanded.Serialization.JsonSerializer,
-  types: EventStore.PostgresTypes,
   username: "postgres",
   password: "Phoenix1234",
   database: "bank_api_eventstore_dev",
