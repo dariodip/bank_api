@@ -41,8 +41,11 @@ defmodule BankAPI.MixProject do
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:jason, "~> 1.2"},
+      {:plug_cowboy, "~> 2.0"},
+      {:commanded_ecto_projections, "~> 1.2"},
+      {:commanded_eventstore_adapter, "~> 1.2"},
+      {:commanded, "~> 1.2"}
     ]
   end
 
@@ -54,7 +57,8 @@ defmodule BankAPI.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup"],
+      setup: ["deps.get", "event_store.reset", "ecto.reset"],
+      init: ["deps.get", "event_store.reset", "ecto.drop", "ecto.create", "ecto.migrate"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "event_store.reset": ["event_store.drop", "event_store.create", "event_store.init"],

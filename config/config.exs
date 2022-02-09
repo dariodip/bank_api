@@ -5,7 +5,7 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
 config :bank_api,
   namespace: BankAPI,
@@ -26,6 +26,28 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :bank_api, event_stores: [BankAPI.EventStore]
+
+config :bank_api, BankAPI.Commanded,
+  event_store: [
+    adapter: Commanded.EventStore.Adapters.EventStore,
+    event_store: BankAPI.EventStore
+  ],
+  registry: :local,
+  pubsub: :local
+
+config :bank_api, BankAPI.EventStore,
+  column_data_type: "jsonb",
+  serializer: EventStore.JsonbSerializer,
+  types: EventStore.PostgresTypes
+
+config :bank_api,
+  projectors_supervisor_children: [
+    BankAPI.Accounts.Projectors.AccountOpened
+  ]
+
+config :commanded_ecto_projections, repo: BankAPI.Repo
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

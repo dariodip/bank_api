@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 #
@@ -7,7 +7,7 @@ use Mix.Config
 # Run `mix help test` for more information.
 config :bank_api, BankAPI.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "Phoenix1234",
   database: "bank_api_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
@@ -20,3 +20,21 @@ config :bank_api, BankAPIWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :bank_api, BankAPI.Commanded,
+  event_store: [
+    adapter: Commanded.EventStore.Adapters.InMemory,
+    event_store: BankAPI.EventStore,
+    serializer: Commanded.Serialization.JsonSerializer
+  ],
+  pubsub: :local,
+  registry: :local
+
+config :bank_api, BankAPI.EventStore,
+  types: EventStore.PostgresTypes,
+  username: "postgres",
+  password: "Phoenix1234",
+  database: "bank_api_event_store_test#{System.get_env("MIX_TEST_PARTITION")}",
+  hostname: "localhost",
+  pool_size: 10,
+  pool_overflow: 5
