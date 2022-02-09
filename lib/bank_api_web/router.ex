@@ -2,11 +2,13 @@ defmodule BankAPIWeb.Router do
   use BankAPIWeb, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/api", BankAPIWeb do
-    pipe_through :api
+    pipe_through(:api)
+
+    resources("/accounts", AccountController, only: [:create])
   end
 
   # Enables LiveDashboard only for development
@@ -20,8 +22,8 @@ defmodule BankAPIWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: BankAPIWeb.Telemetry
+      pipe_through([:fetch_session, :protect_from_forgery])
+      live_dashboard("/dashboard", metrics: BankAPIWeb.Telemetry)
     end
   end
 end
