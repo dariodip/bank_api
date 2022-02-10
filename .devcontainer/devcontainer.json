@@ -14,7 +14,7 @@
 				"previewLimit": 50,
 				"server": "localhost",
 				"port": 5432,
-				"database": "bank_api_deb",
+				"database": "bank_api_dev",
 				"username": "postgres",
 				"password": "Phoenix1234"
 			}
@@ -32,7 +32,8 @@
 		"editorconfig.editorconfig",
 		"redhat.vscode-yaml",
 		"hbenl.vscode-test-explorer",
-		"adamzapasnik.elixir-test-explorer"
+		"adamzapasnik.elixir-test-explorer",
+		"humao.rest-client"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [

@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :bank_api, BankAPI.Repo,
@@ -60,8 +60,7 @@ config :phoenix, :plug_init_mode, :runtime
 config :eventstore,
   column_data_type: "jsonb"
 
-config :eventstore, EventStore.Storage,
-  serializer: EventStore.JsonbSerializer,
+config :eventstore, EventStore.Storage, serializer: EventStore.JsonbSerializer
 
 config :bank_api, BankAPI.EventStore,
   serializer: Commanded.Serialization.JsonSerializer,
