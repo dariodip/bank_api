@@ -13,34 +13,32 @@ defmodule BankAPI.Accounts do
 
   def get_account(uuid), do: Repo.get!(Account, uuid)
 
-  def open_account(account_params) do
-    changeset = account_opening_changeset(account_params)
+  def open_account(%{"initial_balance" => initial_balance}) do
+    account_uuid = UUID.uuid4()
 
-    if changeset.valid? do
-      account_uuid = UUID.uuid4()
+    dispatch_result =
+      %OpenAccount{
+        initial_balance: initial_balance,
+        account_uuid: account_uuid
+      }
+      |> Commanded.dispatch()
 
-      dispatch_result =
-        %OpenAccount{
-          initial_balance: changeset.changes.initial_balance,
-          account_uuid: account_uuid
+    case dispatch_result do
+      :ok ->
+        {
+          :ok,
+          %Account{
+            uuid: account_uuid,
+            current_balance: initial_balance
+          }
         }
-        |> Commanded.dispatch()
 
-      case dispatch_result do
-        :ok ->
-          {:ok,
-           %Account{
-             uuid: account_uuid,
-             current_balance: changeset.changes.initial_balance
-           }}
-
-        reply ->
-          reply
-      end
-    else
-      {:validation_error, changeset}
+      reply ->
+        reply
     end
   end
+
+  def open_account(_params), do: {:error, :bad_command}
 
   defp account_opening_changeset(params) do
     {
