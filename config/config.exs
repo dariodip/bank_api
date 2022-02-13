@@ -45,7 +45,8 @@ config :bank_api, BankAPI.EventStore,
 config :bank_api,
   projectors_supervisor_children: [
     BankAPI.Accounts.Projectors.AccountOpened,
-    BankAPI.Accounts.Projectors.AccountClosed
+    BankAPI.Accounts.Projectors.AccountClosed,
+    BankAPI.Accounts.Projectors.DepositsAndWithdrawals
   ]
 
 config :commanded_ecto_projections, repo: BankAPI.Repo

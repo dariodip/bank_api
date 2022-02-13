@@ -1,5 +1,5 @@
 defmodule BankAPI.Accounts.Projectors.AccountOpenedTest do
-  use BankAPI.DataCase
+  use BankAPI.DataCase, async: false
   use ExUnit.Case, async: false
   import BankAPI.Test.ProjectorUtils
 
