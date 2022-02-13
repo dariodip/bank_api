@@ -46,10 +46,13 @@ config :bank_api,
   projectors_supervisor_children: [
     BankAPI.Accounts.Projectors.AccountOpened,
     BankAPI.Accounts.Projectors.AccountClosed,
-    BankAPI.Accounts.Projectors.DepositsAndWithdrawals
+    BankAPI.Accounts.Projectors.DepositsAndWithdrawals,
+    BankAPI.Accounts.ProcessManagers.TransferMoney
   ]
 
 config :commanded_ecto_projections, repo: BankAPI.Repo
+
+config :bank_api, :process_manager_idle_timeout, :timer.minutes(10)
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

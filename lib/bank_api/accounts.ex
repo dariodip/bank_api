@@ -12,6 +12,7 @@ defmodule BankAPI.Accounts do
   alias BankAPI.Accounts.Commands.DepositIntoAccount
   alias BankAPI.Accounts.Commands.OpenAccount
   alias BankAPI.Accounts.Commands.WithdrawFromAccount
+  alias BankAPI.Accounts.Commands.TransferBetweenAccounts
   alias BankAPI.Accounts.Projections.Account
 
   @doc """
@@ -107,6 +108,16 @@ defmodule BankAPI.Accounts do
       reply ->
         reply
     end
+  end
+
+  def transfer(source_id, amount, destination_id) do
+    %TransferBetweenAccounts{
+      account_uuid: source_id,
+      transfer_uuid: UUID.uuid4(),
+      transfer_amount: amount,
+      destination_account_uuid: destination_id
+    }
+    |> Router.dispatch()
   end
 
   def uuid_regex do
