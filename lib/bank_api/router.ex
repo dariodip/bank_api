@@ -2,6 +2,7 @@ defmodule BankAPI.Router do
   use Commanded.Commands.Router
 
   alias BankAPI.Accounts.Aggregates.Account
+  alias BankAPI.Accounts.Aggregates.Lifespan
   alias BankAPI.Accounts.Commands.CloseAccount
   alias BankAPI.Accounts.Commands.DepositIntoAccount
   alias BankAPI.Accounts.Commands.OpenAccount
@@ -13,6 +14,7 @@ defmodule BankAPI.Router do
   dispatch(
     [OpenAccount, CloseAccount, DepositIntoAccount, WithdrawFromAccount, TransferBetweenAccounts],
     to: Account,
+    lifespan: Lifespan,
     identity: :account_uuid
   )
 end
