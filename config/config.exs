@@ -54,6 +54,11 @@ config :commanded_ecto_projections, repo: BankAPI.Repo
 
 config :bank_api, :process_manager_idle_timeout, :timer.minutes(10)
 
+# increment snapshot_version for any change to the aggregate
+config :bank_api, BankAPI.Accounts.Aggregates.Account,
+  snapshot_every: 10,
+  snapshot_version: 1
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
