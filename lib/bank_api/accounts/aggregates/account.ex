@@ -199,7 +199,7 @@ defmodule BankAPI.Accounts.Aggregates.Account do
   end
 
   def apply(
-        %Account{} = account,
+        %Account{uuid: account_uuid} = account,
         %AccountClosed{
           account_uuid: account_uuid
         }
