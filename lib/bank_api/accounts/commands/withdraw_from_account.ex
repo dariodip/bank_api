@@ -13,7 +13,7 @@ defmodule BankAPI.Accounts.Commands.WithdrawFromAccount do
   defp schema do
     %{
       account_uuid: [:string, Skooma.Validators.regex(Accounts.uuid_regex())],
-      withdraw_amount: [:int, &Validators.positive_integers(&1, 1)],
+      withdraw_amount: [:int, &Validators.positive_integer(&1)],
       transfer_uuid: [:string, Skooma.Validators.regex(Accounts.uuid_regex())]
     }
   end

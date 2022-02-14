@@ -5,7 +5,6 @@ defmodule BankAPI.Accounts do
 
   import Ecto.Query, warn: false
 
-  alias Ecto.Changeset
   alias BankAPI.Repo
   alias BankAPI.Commanded
   alias BankAPI.Accounts.Commands.CloseAccount
@@ -67,7 +66,7 @@ defmodule BankAPI.Accounts do
     %CloseAccount{
       account_uuid: id
     }
-    |> Router.dispatch()
+    |> Commanded.dispatch()
   end
 
   def deposit(id, amount) do
@@ -76,7 +75,7 @@ defmodule BankAPI.Accounts do
         account_uuid: id,
         deposit_amount: amount
       }
-      |> Router.dispatch(consistency: :strong)
+      |> Commanded.dispatch(consistency: :strong)
 
     case dispatch_result do
       :ok ->
@@ -96,7 +95,7 @@ defmodule BankAPI.Accounts do
         account_uuid: id,
         withdraw_amount: amount
       }
-      |> Router.dispatch(consistency: :strong)
+      |> Commanded.dispatch(consistency: :strong)
 
     case dispatch_result do
       :ok ->
@@ -117,20 +116,10 @@ defmodule BankAPI.Accounts do
       transfer_amount: amount,
       destination_account_uuid: destination_id
     }
-    |> Router.dispatch()
+    |> Commanded.dispatch()
   end
 
   def uuid_regex do
     ~r/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
-  end
-
-  defp account_opening_changeset(params) do
-    {
-      params,
-      %{initial_balance: :integer}
-    }
-    |> Changeset.cast(params, [:initial_balance])
-    |> Changeset.validate_required([:initial_balance])
-    |> Changeset.validate_number(:initial_balance, greater_than: 0)
   end
 end

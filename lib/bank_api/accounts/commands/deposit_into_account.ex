@@ -13,7 +13,7 @@ defmodule BankAPI.Accounts.Commands.DepositIntoAccount do
   defp schema do
     %{
       account_uuid: [:string, Skooma.Validators.regex(Accounts.uuid_regex())],
-      deposit_amount: [:int, &Validators.positive_integers(&1, 1)],
+      deposit_amount: [:int, &Validators.positive_integer(&1)],
       transfer_uuid: [:string, Skooma.Validators.regex(Accounts.uuid_regex())]
     }
   end

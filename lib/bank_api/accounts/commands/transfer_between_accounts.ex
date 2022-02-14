@@ -25,7 +25,7 @@ defmodule BankAPI.Accounts.Commands.TransferBetweenAccounts do
     %{
       account_uuid: [:string, Skooma.Validators.regex(Accounts.uuid_regex())],
       transfer_uuid: [:string, Skooma.Validators.regex(Accounts.uuid_regex())],
-      transfer_amount: [:int, &Validators.positive_integer(&1, 1)],
+      transfer_amount: [:int, &Validators.positive_integer(&1)],
       destination_account_uuid: [:string, Skooma.Validators.regex(Accounts.uuid_regex())]
     }
   end

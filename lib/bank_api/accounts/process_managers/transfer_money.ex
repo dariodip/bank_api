@@ -16,7 +16,6 @@ defmodule BankAPI.Accounts.ProcessManagers.TransferMoney do
   alias __MODULE__
   alias BankAPI.Accounts.Commands.DepositIntoAccount
   alias BankAPI.Accounts.Commands.WithdrawFromAccount
-  alias BankAPI.Accounts.Commands.TransferBetweenAccounts
   alias BankAPI.Accounts.Events.DepositedIntoAccount
   alias BankAPI.Accounts.Events.MoneyTransferRequested
   alias BankAPI.Accounts.Events.WithdrawnFromAccount

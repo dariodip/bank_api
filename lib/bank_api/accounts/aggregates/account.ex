@@ -1,4 +1,5 @@
 defmodule BankAPI.Accounts.Aggregates.Account do
+  @derive Jason.Encoder
   defstruct uuid: nil,
             current_balance: nil,
             closed?: false
